@@ -90,7 +90,7 @@ body {
  </form>
  </div>
   <div id='container'>
- <!--    <div class='result-col'>
+    <!-- <div class='result-col'>
       <div class='logo'></div>
 
 	  <div class='result'>
@@ -106,7 +106,7 @@ body {
 	  	</div>
 	  		<div class='description'>"<b>Cats</b> (stylized as <b>CATS</b>) is a musical composed by Andrew Lloyd Webber, based on Old Possum's Book of Practical <b>Cats</b> by T. S. Eliot. It introduced the song standard ..."</div>
 	  </div>
-	</div> 
+	</div>
 
 
 	<div class='result-col'>
@@ -125,7 +125,7 @@ body {
 	  	</div>
 	  		<div class='description'>"<b>Cats</b> (stylized as <b>CATS</b>) is a musical composed by Andrew Lloyd Webber, based on Old Possum's Book of Practical <b>Cats</b> by T. S. Eliot. It introduced the song standard ..."</div>
 	  </div>
-	</div>  -->
+	</div> -->
 
   </div>
   <script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
@@ -138,33 +138,30 @@ body {
 
     console.log(results);
 
-    for (i=0; i<results.length; i++){
+    for (i=0; i<results.webPages.value.length; i++){
+			let resultData = results.webPages.value[i];
       var column = document.createElement('div');
       column.className = 'result-col';
-      var logo = document.createElement('div');
-      logo.className = 'logo';
-      logo.style.background = "url('" +  results[i]['website'] + '.png' + "')";
-      
-      column.appendChild(logo);
-      for(j=0; j<results[i].results.length; j++){
+
 
         (function(e){
+					//console.log(e);
           var result = document.createElement('div');
           result.className = 'result';
-          url = results[i].results[j].data.clickurl;
-          result.onclick = function(){document.location.href = e};
+          url = e.url;
+          //result.onclick = function(){document.location.href = url};
 
           var header = document.createElement('div');
           header.className = 'header';
 
-          var title = document.createElement('div');
-
+          var title = document.createElement('a');
+					title.setAttribute('href',url);
           title.className = 'title';
-          title.innerHTML = results[i].results[j].data.dispurl;
-			
+          title.innerHTML = resultData.name;
+
           var description = document.createElement('div');
           description.className = 'description';
-          description.innerHTML = results[i].results[j].data.abstract;
+          description.innerHTML = resultData.snippet;
 
           header.appendChild(title);
 
@@ -172,10 +169,11 @@ body {
           result.appendChild(description);
 
           column.appendChild(result);
-        })(results[i].results[j].data.clickurl)
-      }
-      
+        })(resultData)
+    //  }
+
       document.getElementById('container').appendChild(column);
+			console.log(column);
     }
 
     console.log(results);
